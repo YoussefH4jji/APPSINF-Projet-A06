@@ -4,7 +4,7 @@
 }
 .header {
     padding: 30px;
-    background-color: lightcyan;
+    background-color: darkturquoise;
     display: grid;
     grid-template-columns: auto auto auto;
 }
@@ -25,8 +25,15 @@
     text-decoration: underline;
 }
 table,th,td {
-    min-width: 377px;
-    min-height: 100px;
+    min-width: 100%;
+    min-height: 100%;
     border: 1px solid black;
     border-collapse: collapse;
+}
+body {
+    background-color: lightcyan;
+}
+#bigger_box {
+    width: 70%;
+    height: 100px;
 }
