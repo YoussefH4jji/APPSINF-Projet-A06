@@ -39,8 +39,8 @@ header {
     text-decoration: underline;
 }
 table,th,td {
-    min-width: 377px;
-    min-height: 100px;
+    min-width: 100%;
+    min-height: 100%;
     border: 1px solid black;
     border-collapse: collapse;
 }
