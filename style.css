@@ -38,21 +38,43 @@ header {
 #ajout_acc {
     text-decoration: underline;
 }
-table,th,td {
-    min-width: 100%;
-    min-height: 100%;
-    border: 1px solid black;
+
+table{
+    width: 90%;
+    margin: 1rem auto 2rem auto;
     border-collapse: collapse;
+    border-radius: 8px ;
+    overflow: hidden;
+    box-shadow: 0 4px 8px #2C93CE ;
 }
+th, td{
+    padding: 12px 15px;
+    text-align: left;
+}
+th{
+    background-color: #2C93CE;
+    color: white;
+    font-weight: bold;
+}
+tr:nth-child(even){
+    background-color: #f1f1f1;
+}
+tr:hover{
+    background-color: #c3d9ea;
+    cursor: pointer;
+}
+td{
+    color: #004564;
+}
+
 .search-container{
     display: flex;
     line-height: 28px;
     align-items: center;
     position: relative;
-    max-width: 190px;
 }
 .input{
-    width: 100%;
+    width: 30rem;
     height: 40px;
     line-height: 28px;
     padding: 0 1rem;
