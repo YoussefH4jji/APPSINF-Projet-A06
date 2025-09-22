@@ -3,7 +3,6 @@
     margin: 0;
     font-family: sans-serif;
 }
-<<<<<<< HEAD
 img{
     width: 10rem;
     height: 10rem;
@@ -22,13 +21,6 @@ header {
     flex-direction: row;
     justify-content: space-around;
 
-=======
-.header {
-    padding: 30px;
-    background-color: darkturquoise;
-    display: grid;
-    grid-template-columns: auto auto auto;
->>>>>>> 909d0c995f989692aff5c3671dba5e0bff19c1f5
 }
 #username {
     text-align: right;
@@ -52,7 +44,6 @@ table,th,td {
     border: 1px solid black;
     border-collapse: collapse;
 }
-<<<<<<< HEAD
 .search-container{
     display: flex;
     line-height: 28px;
@@ -92,18 +83,12 @@ table,th,td {
     width: 1rem;
     height: 1rem;
    }
-   
-   
-   
-   
-   
-   
-=======
-body {
-    background-color: lightcyan;
-}
 #bigger_box {
     width: 70%;
     height: 100px;
 }
->>>>>>> 909d0c995f989692aff5c3671dba5e0bff19c1f5
+   
+   
+   
+   
+   
