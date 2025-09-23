@@ -1,0 +1,15 @@
+Fonctionnalité: Rechercher des incidents
+
+Les citoyens ont la possibilité de rechercher un problème dans ceux déjà présents dans la liste
+
+Scénario: La personne souhaite rechercher une incident déjà signalé
+Etant donné qu'il est présent dans la liste
+Lorsque la personne écrit le sujet de sa recherche
+Et que cela correspond bien à un problème listé
+Alors la liste sera filtrée pour ne garder que ce qui y correspond
+
+Scénario: La personne souhaite rechercher un incident qui n'a pas encore été signalé
+Etant donné qu'il n'est pas présent dans la liste
+Lorsque la personne écrit le sujet de sa recherche
+Et que cela ne correspond à aucun problème listé
+Alors la liste sera vide
