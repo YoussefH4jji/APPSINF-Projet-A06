@@ -1,6 +1,9 @@
-
+*{
+    box-sizing: border-box;
+    margin: 0;
+    font-family: sans-serif;
+}
 .container {
-    max-width: 400px;
     padding: 25px 35px;
     border: 5px solid rgb(255, 255, 255);
     box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
@@ -14,6 +17,7 @@
     flex-direction: column;
     gap: 20px;
     box-sizing: border-box;
+    width: 30rem;
     border-radius: 16px;
 }
 .heading {
@@ -25,10 +29,9 @@
   
 .form {
     margin-top: 20px;
-}
-.form{
     width: 100%;
 }
+
 .form .input {
     width: 90%;
     background: white;
@@ -149,4 +152,21 @@
 }
 .svg{
     cursor: pointer;
+}
+.input-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.input-container input{
+    margin-left: 2rem;
+}
+.creat_inc_container{
+    width: 40rem;
+}
+.creat_inc_container h3{
+    text-align: center;
+    color: rgb(16, 137, 211);
+    
 }

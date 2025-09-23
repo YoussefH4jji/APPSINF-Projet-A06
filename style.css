@@ -15,6 +15,9 @@ header {
     align-items: center;
 
 }
+header img{
+    cursor: pointer;
+}
 .header-content{
     width: 100%;
     display:  flex;
