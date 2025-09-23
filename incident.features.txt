@@ -1,0 +1,12 @@
+Fonctionnalité: Signaler un nouvel incident
+
+Le citoyen peut ajouter un incident qui n'est pas présent dans ceux déjà listés
+
+Scénario: Le citoyen est frustré par des lampadaires qui s'éteignent en pleine nuit
+Etant donné qu'il ne le trouve pas déjà noté dans la liste
+Lorsque la personne demande a ajouter un incident
+Alors il pourra décrire le problème
+Et donné l'adresse du problème
+Et renseigner son nom
+Et indiquer la date du jour de la plainte
+Et sa plainte sera ajoutée à la liste
