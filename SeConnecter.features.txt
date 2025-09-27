@@ -1,0 +1,25 @@
+# lanuage:fr
+Fonctionnalité: Se connecter
+
+Le citoyen peut se connecter à son compte
+
+Sénario: Le citoyen veut se connecter
+Etant donné le citoyen à deja un compte
+Et il connait son mot de passe
+Et il connait son email
+Lorsque le citoyen veut se connecter
+Alors il se connecter
+
+
+Sénario: le citoyen n'a pas de compte
+Etant donné: le cotoyen n'a pas de compte
+Lorsque le citoyen essaye de so connecter
+Alors il est rediriger vers la page s'inscrire
+
+
+Sénario: le citoyen a oublié son mot de passe
+Etant donné: le citoyen a un compte
+Et il connait son email
+Lorsqu'il essaye de se connecter
+Mais il n'a pas le bon mot de passe
+Alors il pourra reset son mot de passe
