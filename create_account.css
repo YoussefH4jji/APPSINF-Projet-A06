@@ -124,12 +124,6 @@
     box-shadow: #3FAE81 0px 12px 10px -8px;
     transition: all 0.2s ease-in-out;
 }
-  
-/* .social-account-container .social-accounts .social-button .svg {
-    fill: white;
-    margin: auto;
-} */
-  
 .social-account-container .social-accounts .social-button:hover {
     transform: scale(1.2);
 }
@@ -138,17 +132,6 @@
     transform: scale(0.9);
 }
   
-.agreement {
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-}
-  
-.agreement a {
-    text-decoration: none;
-    color: #004564;
-    font-size: 9px;
-}
 .svg{
     cursor: pointer;
 }
