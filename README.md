@@ -3,6 +3,7 @@
 * Fortuna Dos Santos Lucas
 * Hajji Youssef
 * von Lettow-Vorbeck Paul
+* Allaoui Ali
 ## Date de remise: 30/09/2025
 ## Intitulé du projet: AïeMaVille, application web pour signaler des incidents
 ## Dossier /html/
