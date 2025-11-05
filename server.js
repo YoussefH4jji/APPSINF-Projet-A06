@@ -1,33 +1,93 @@
-const express = require('express'); 
+const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
+const session = require('express-session'); 
 const app = express();
-const PORT = 8080; // c'est le port sur lequel on va voir notre site
 
- // on dit ) express qu'on va utiliser ejs  et qu'ils sont dans le dossier views
+const PORT = 8080;
+mongoose
+  .connect('mongodb://127.0.0.1:27017/projetAPP')
+  .then(() => console.log("Connected to the database"))
+  .catch((err) => console.error("Database connection error:", err));
+
+const userSchema = new mongoose.Schema({
+  username: String,
+  email: String,
+  password: String,
+});
+const User = mongoose.model('User', userSchema);
+
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views")); 
-
-// on dit a express ou sont les fichiers statiques (css, img, js) 
-// du coup /styles/style.css par exemple ou /images/logo.png
+app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "assets")));
-app.use(express.urlencoded({ extended: true })); // pour récup les données des formulaires (tout les données sont env via POST)
-
-// page d'acc 
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "supersecretkey", 
+    saveUninitialized: false,
+  })
+);
 app.get("/", (req, res) => {
-    const date = new Date();
-    res.render("index", { date: date.toLocaleDateString("fr-FR") }); 
-})
-
-// page pour créer un compte
-app.get("/create_account", (req, res) => {
-    res.render("create_account");
+  const date = new Date();
+  const username = req.session.username || "Nom d'utilisateur"; 
+  res.render("index", {
+    date: date.toLocaleDateString("fr-FR"),
+    username,
+  });
 });
+app.get("/login", (req, res) => {
+  const message = req.query.message || null;
+  res.render("login", { message });
+});
+app.get("/signup", (req, res) => {
+  res.render("signup", { message: null });
+});
+app.post("/signup", async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
 
-// page pour signaler un incident
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.render("signup", { message: "Email déjà utilisé." });
+    }
+
+    const newUser = new User({ username, email, password });
+    await newUser.save();
+
+    res.redirect("/login?message= Compte créé avec succès ! Connectez-vous maintenant.");
+  } catch (err) {
+    console.error("Signup error:", err);
+    res.status(500).send("Erreur interne du serveur");
+  }
+});
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.render("login", { message: "Aucun compte trouvé avec cet email." });
+    }
+
+    if (user.password !== password) {
+      return res.render("login", { message: "Mot de passe incorrect." });
+    }
+    req.session.username = user.username;
+    res.redirect("/");
+  } catch (error) {
+    console.error( "Login error:", error);
+    res.render("login", { message: "Échec de la connexion. Réessayez." });
+  }
+});
+app.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/login");
+  });
+});
 app.get("/incident", (req, res) => {
-    res.render("crea_inc");
+  res.render("crea_inc");
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () =>{
+  console.log(`Server running at http://localhost:${PORT}`);
+})

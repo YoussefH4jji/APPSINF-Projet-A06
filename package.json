@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/YoussefH4jji/APPSINF-Projet-A06#readme",
   "dependencies": {
+    "body-parser": "^2.2.0",
     "ejs": "^3.1.10",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "mongoose": "^8.19.2"
   }
 }
