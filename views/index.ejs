@@ -42,25 +42,25 @@
                 <th>Signalé par</th>
                 <th>Date</th>
             </tr>
-            <tr>
-                <td>Lampadaire Renversé</td>
-                <td>Rue du Trotoire</td>
-                <td>Lucas</td>
-                <td>11/09</td>
-            </tr>
-            <tr>
-                <td>Lampadaire Renversé</td>
-                <td>Rue du Trotoire</td>
-                <td>Lucas</td>
-                <td>11/09</td>
-            </tr>
-            <tr>
-                <td>Lampadaire Renversé</td>
-                <td>Rue du Trotoire</td>
-                <td>Lucas</td>
-                <td>11/09</td>
-            </tr>
+
+            <% incidents.forEach(incident=> { %>
+                <tr>
+                    <td>
+                        <%= incident.description %>
+                    </td>
+                    <td>
+                        <%= incident.adresse %>
+                    </td>
+                    <td>
+                        <%= incident.signale_par %>
+                    </td>
+                    <td>
+                        <%= new Date(incident.date).toLocaleDateString("fr-FR") %>
+                    </td>
+                </tr>
+                <% }) %>
         </table>
+
         <script>
             // Je sélectionne l'input de recherche dans la barre en haut
             const searchInput = document.querySelector('.search-container .input');
@@ -74,7 +74,7 @@
             // À chaque fois que je tape quelque chose dans la barre de recherche...
             searchInput.addEventListener('input', () => {
 
-                // ...je récupère le texte tapé et je le mets en minuscule
+                // Je récupère le texte tapé et je le mets en minuscule
                 // (comme ça, la recherche n’est pas sensible aux majuscules)
                 const filter = searchInput.value.toLowerCase();
 

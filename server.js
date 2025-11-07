@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const session = require('express-session'); 
+const session = require('express-session');
 const app = express();
 
 const PORT = 8080;
@@ -17,24 +17,42 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
+const incidentSchema = new mongoose.Schema({
+  description: String,
+  adresse: String,
+  signale_par: String,
+  date: { type: Date, default: Date.now },
+});
+const Incident = mongoose.model('Incident', incidentSchema);
+
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "assets")));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "supersecretkey", 
+    secret: "supersecretkey",
     saveUninitialized: false,
   })
 );
-app.get("/", (req, res) => {
-  const date = new Date();
-  const username = req.session.username || "Nom d'utilisateur"; 
-  res.render("index", {
-    date: date.toLocaleDateString("fr-FR"),
-    username,
-  });
+app.get("/", async (req, res) => {
+  try {
+    const incidents = await Incident.find(); //récupère les incidents depuis mongodb
+    const date = new Date();
+    const username = req.session.username || "Nom d'utilisateur";
+
+    res.render("index", {
+      date: date.toLocaleDateString("fr-FR"),
+      username,
+      incidents, 
+    });
+  } catch (error) {
+    console.error("Erreur lors du chargement des incidents :", error);
+    res.status(500).send("Erreur serveur");
+  }
 });
+
 app.get("/login", (req, res) => {
   const message = req.query.message || null;
   res.render("login", { message });
@@ -75,7 +93,7 @@ app.post("/login", async (req, res) => {
     req.session.username = user.username;
     res.redirect("/");
   } catch (error) {
-    console.error( "Login error:", error);
+    console.error("Login error:", error);
     res.render("login", { message: "Échec de la connexion. Réessayez." });
   }
 });
@@ -84,10 +102,33 @@ app.get("/logout", (req, res) => {
     res.redirect("/login");
   });
 });
+
 app.get("/incident", (req, res) => {
-  res.render("crea_inc");
+  const username = req.session.username || "Utilisateur";
+  res.render("crea_inc", { username });
+});
+app.post("/incident", async (req, res) => {
+  try {
+    const { description, adresse, signale_par, date } = req.body;
+
+    const newIncident = new Incident({
+      description,
+      adresse,
+      signale_par,
+      date: date || Date.now(),
+    });
+
+    await newIncident.save();
+    console.log("✅ Nouvel incident ajouté !");
+    res.redirect("/"); //redirection vers la page index
+  } catch (err) {
+    console.error("Erreur lors de l’ajout :", err);
+    res.status(500).send("Erreur lors de l’ajout de l’incident");
+  }
 });
 
-app.listen(PORT, () =>{
+
+
+app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 })
