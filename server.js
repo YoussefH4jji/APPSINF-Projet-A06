@@ -85,7 +85,8 @@ app.get("/logout", (req, res) => {
   });
 });
 app.get("/incident", (req, res) => {
-  res.render("crea_inc");
+  const username = req.session.username || "Nom d'utilisateur"; 
+  res.render("crea_inc", { username });
 });
 
 app.listen(PORT, () =>{
