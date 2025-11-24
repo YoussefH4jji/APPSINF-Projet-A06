@@ -74,6 +74,9 @@ app.post("/signup", async (req, res) => {
     const newUser = new User({ username, email, password });
     await newUser.save();
 
+    document.cookie = "username=" + username;
+    document.cookies = "password=" + password;
+
     res.redirect("/login?message= Compte créé avec succès ! Connectez-vous maintenant.");
   } catch (err) {
     console.error("Signup error:", err);
@@ -86,6 +89,19 @@ app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+
+    const cookies = document.cookie.split(';');
+
+    for(const c of cookies) {
+      const [name,value] = cookie.split('=');
+      if(name == username) {
+        username = value;
+      }
+      if(name == password) {
+        password = value;
+      }
+    }
+    
     if (!user) {
       return res.render("login", { message: "Aucun compte trouvé avec cet email." });
     }
