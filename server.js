@@ -33,7 +33,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     secret: "supersecretkey",
-    resave: false,
     saveUninitialized: false,
   })
 );
@@ -74,19 +73,36 @@ app.post("/signup", async (req, res) => {
     const newUser = new User({ username, email, password });
     await newUser.save();
 
+    document.cookie = "username=" + username + "password=" + password + "max-age=1300000" + "; path=/";
+
     res.redirect("/login?message= Compte créé avec succès ! Connectez-vous maintenant.");
   } catch (err) {
     console.error("Signup error:", err);
     res.status(500).send("Erreur interne du serveur");
   }
 });
-
 app.post("/login", async (req, res) => {
   console.log("login data :", req.body);
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+
+    const cookies = document.cookie.split(';');
+
+    for(const c of cookies) {
+      const [name,value] = cookie.split('=');
+      if(name == username) {
+        const username = value;
+      }
+      if(name == password) {
+        const password = value;
+      }
+    }
+    if (username && password) {
+      document.cookie = "username=" + username + "password=" + password + "max-age=1300000" + "; path=/";
+    }
+  
     if (!user) {
       return res.render("login", { message: "Aucun compte trouvé avec cet email." });
     }
