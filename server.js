@@ -73,7 +73,7 @@ app.post("/signup", async (req, res) => {
     const newUser = new User({ username, email, password });
     await newUser.save();
 
-    document.cookie = "username=" + username + "password=" + password + "max-age=1300000" + "; path=/";
+    res.cookie = "username=" + username + "password=" + password + "max-age=1300000" + "; path=/";
 
     res.redirect("/login?message= Compte créé avec succès ! Connectez-vous maintenant.");
   } catch (err) {
@@ -88,7 +88,7 @@ app.post("/login", async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    const cookies = document.cookie.split(';');
+    const cookies = res.cookie.split(';');
 
     for(const c of cookies) {
       const [name,value] = cookie.split('=');
@@ -100,7 +100,7 @@ app.post("/login", async (req, res) => {
       }
     }
     if (username && password) {
-      document.cookie = "username=" + username + "password=" + password + "max-age=1300000" + "; path=/";
+      res.cookie = "username=" + username + "password=" + password + "max-age=1300000" + "; path=/";
     }
   
     if (!user) {
