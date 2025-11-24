@@ -33,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     secret: "supersecretkey",
+    resave: false,
     saveUninitialized: false,
   })
 );
@@ -61,6 +62,7 @@ app.get("/signup", (req, res) => {
   res.render("signup", { message: null });
 });
 app.post("/signup", async (req, res) => {
+  console.log("Données reçues :", req.body);
   try {
     const { username, email, password } = req.body;
 
@@ -78,6 +80,7 @@ app.post("/signup", async (req, res) => {
     res.status(500).send("Erreur interne du serveur");
   }
 });
+
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
