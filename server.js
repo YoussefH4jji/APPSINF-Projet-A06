@@ -62,7 +62,7 @@ app.get("/signup", (req, res) => {
   res.render("signup", { message: null });
 });
 app.post("/signup", async (req, res) => {
-  console.log("Données reçues :", req.body);
+  console.log("Signup data :", req.body);
   try {
     const { username, email, password } = req.body;
 
@@ -82,6 +82,7 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
+  console.log("login data :", req.body);
   try {
     const { email, password } = req.body;
 
