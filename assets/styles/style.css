@@ -25,6 +25,13 @@ header img{
     justify-content: space-around;
 
 }
+.header-content2{
+    width: 30%;
+    display:  flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
 #username {
     text-align: right;
     font-weight: bold;
