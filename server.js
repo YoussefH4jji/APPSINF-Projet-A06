@@ -6,10 +6,13 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 const PORT = 8080;
-mongoose
-  .connect('mongodb://127.0.0.1:27017/projetAPP')
-  .then(() => console.log("Connected to the database"))
-  .catch((err) => console.error("Database connection error:", err));
+
+if (process.env.NODE_ENV !== "test") {
+  mongoose
+    .connect('mongodb://127.0.0.1:27017/projetAPP')
+    .then(() => console.log("Connected to the database"))
+    .catch((err) => console.error("Database connection error:", err));
+}
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -144,7 +147,12 @@ app.post("/incident", async (req, res) => {
 });
 
 
-
-app.listen(PORT, () => {
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
-})
+  });
+}
+
+module.exports = app;
+
+
