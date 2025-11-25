@@ -8,10 +8,10 @@ const app = express();
 const PORT = 8080;
 
 if (process.env.NODE_ENV !== "test") {
-  mongoose
-    .connect('mongodb://127.0.0.1:27017/projetAPP')
-    .then(() => console.log("Connected to the database"))
-    .catch((err) => console.error("Database connection error:", err));
+  mongoose.connect("mongodb+srv://admin:6i7fOJqe8ynByETb@projetpreparatoire.q1zcdq6.mongodb.net/projetAPP?appName=Projetpreparatoire")
+  .then(() => console.log("Connected to the atlas database"))
+  .catch(err => console.error("Database connection error:", err));
+
 }
 
 const userSchema = new mongoose.Schema({
@@ -40,7 +40,7 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use(cookieParser()); 
+app.use(cookieParser());
 app.get("/", async (req, res) => {
   try {
     const incidents = await Incident.find(); //récupère les incidents depuis mongodb
@@ -74,16 +74,9 @@ app.post("/signup", async (req, res) => {
     if (existingUser) {
       return res.render("signup", { message: "Email déjà utilisé." });
     }
-
+ 
     const newUser = new User({ username, email, password });
     await newUser.save();
-
-<<<<<<< HEAD
-=======
-    document.cookie = "username=" + username;
-    document.cookies = "password=" + password;
-    
->>>>>>> 8379a53f0a1d0bab4f135dbe971d09bce277887f
     res.cookie('username', username, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true });
     res.cookie('password', password, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true });
 
@@ -101,21 +94,6 @@ app.post("/login", async (req, res) => {
 
     const user = await User.findOne({ email });
 
-<<<<<<< HEAD
-=======
-    const cookies = document.cookie.split(';');
-
-    for(const c of cookies) {
-      const [name,value] = cookie.split('=');
-      if(name == username) {
-        username = value;
-      }
-      if(name == password) {
-        password = value;
-      }
-    }
-    
->>>>>>> 8379a53f0a1d0bab4f135dbe971d09bce277887f
     if (!user) {
       return res.render("login", { message: "Aucun compte trouvé avec cet email." });
     }
@@ -159,7 +137,6 @@ app.post("/incident", async (req, res) => {
     });
 
     await newIncident.save();
-    console.log("✅ Nouvel incident ajouté !");
     res.redirect("/"); //redirection vers la page index
   } catch (err) {
     console.error("Erreur lors de l’ajout :", err);
