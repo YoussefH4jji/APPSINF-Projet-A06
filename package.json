@@ -4,7 +4,10 @@
   "description": "* Fortuna Dos Santos Lucas * Hajji Youssef * von Lettow-Vorbeck Paul * Allaoui Ali ## Date de remise: 30/09/2025 ## Intitulé du projet: AïeMaVille, application web pour signaler des incidents ## Dossier /html/ * index.html: page d'acceuil affichant les incidents signalés dans un tableau * crea_acc.html: page de connexion / création de compte  * crea_inc.html: formulaire de création d'un nouveau incident",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -24,5 +27,9 @@
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "mongoose": "^8.19.2"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4"
   }
 }

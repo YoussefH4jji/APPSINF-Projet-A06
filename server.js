@@ -6,10 +6,13 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 const PORT = 8080;
-mongoose
-  .connect('mongodb://127.0.0.1:27017/projetAPP')
-  .then(() => console.log("Connected to the database"))
-  .catch((err) => console.error("Database connection error:", err));
+
+if (process.env.NODE_ENV !== "test") {
+  mongoose
+    .connect('mongodb://127.0.0.1:27017/projetAPP')
+    .then(() => console.log("Connected to the database"))
+    .catch((err) => console.error("Database connection error:", err));
+}
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -75,6 +78,12 @@ app.post("/signup", async (req, res) => {
     const newUser = new User({ username, email, password });
     await newUser.save();
 
+<<<<<<< HEAD
+=======
+    document.cookie = "username=" + username;
+    document.cookies = "password=" + password;
+    
+>>>>>>> 8379a53f0a1d0bab4f135dbe971d09bce277887f
     res.cookie('username', username, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true });
     res.cookie('password', password, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true });
 
@@ -92,6 +101,21 @@ app.post("/login", async (req, res) => {
 
     const user = await User.findOne({ email });
 
+<<<<<<< HEAD
+=======
+    const cookies = document.cookie.split(';');
+
+    for(const c of cookies) {
+      const [name,value] = cookie.split('=');
+      if(name == username) {
+        username = value;
+      }
+      if(name == password) {
+        password = value;
+      }
+    }
+    
+>>>>>>> 8379a53f0a1d0bab4f135dbe971d09bce277887f
     if (!user) {
       return res.render("login", { message: "Aucun compte trouvé avec cet email." });
     }
@@ -144,7 +168,7 @@ app.post("/incident", async (req, res) => {
 });
 
 
-
-app.listen(PORT, () => {
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 })
