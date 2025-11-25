@@ -41,16 +41,16 @@ Formulaire d’ajout
 Formulaire de connexion / inscription
 
 ## Installation et lancement
-▶️ 1. Installer les dépendances
+1. Installer les dépendances
 
 Dans le dossier du projet :
 
 npm install
 npm install package.json
-▶️ 2. Lancer le serveur
+2. Lancer le serveur
 node server.js
 
-▶️ 3. Accéder à l’application
+3. Accéder à l’application
 
 Ouvre ton navigateur :
 
