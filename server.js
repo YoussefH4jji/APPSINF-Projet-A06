@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const app = express();
 
 const PORT = 8080;
@@ -33,10 +34,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     secret: "supersecretkey",
-    resave: false,
     saveUninitialized: false,
   })
 );
+app.use(cookieParser()); 
 app.get("/", async (req, res) => {
   try {
     const incidents = await Incident.find(); //récupère les incidents depuis mongodb
@@ -62,7 +63,7 @@ app.get("/signup", (req, res) => {
   res.render("signup", { message: null });
 });
 app.post("/signup", async (req, res) => {
-  console.log("Données reçues :", req.body);
+  console.log("Signup data :", req.body);
   try {
     const { username, email, password } = req.body;
 
@@ -74,18 +75,23 @@ app.post("/signup", async (req, res) => {
     const newUser = new User({ username, email, password });
     await newUser.save();
 
+    res.cookie('username', username, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true });
+    res.cookie('password', password, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true });
+
+
     res.redirect("/login?message= Compte créé avec succès ! Connectez-vous maintenant.");
   } catch (err) {
     console.error("Signup error:", err);
     res.status(500).send("Erreur interne du serveur");
   }
 });
-
 app.post("/login", async (req, res) => {
+  console.log("login data :", req.body);
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+
     if (!user) {
       return res.render("login", { message: "Aucun compte trouvé avec cet email." });
     }
@@ -93,7 +99,14 @@ app.post("/login", async (req, res) => {
     if (user.password !== password) {
       return res.render("login", { message: "Mot de passe incorrect." });
     }
+
+    const cookieUsername = req.cookies.username;
+    const cookiePassword = req.cookies.password;
+
     req.session.username = user.username;
+    res.cookie('username', cookieUsername, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true });
+    res.cookie('password', cookiePassword, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true });
+
     res.redirect("/");
   } catch (error) {
     console.error("Login error:", error);
